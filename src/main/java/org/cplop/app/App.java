@@ -1,4 +1,4 @@
-package com.cplop.app;
+package org.cplop.app;
 
 /**
  * Hello world!
