@@ -4,8 +4,6 @@ import junit.framework.Test;
 import junit.framework.TestCase;
 import junit.framework.TestSuite;
 
-import org.cplop.db.Database;
-
 /**
  * Unit test for Database connection
  */
@@ -46,10 +44,6 @@ public class DatabaseTest
         user = "root";
         pass = "Jeffrey";
 
-        try {
-            testDatabase = new Database(url, user, pass);
-        } catch (Exception e) {
-            assert(false);
-        }
+        testDatabase = new Database(url, user, pass);
     }
 }

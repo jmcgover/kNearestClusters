@@ -4,6 +4,8 @@ import java.util.*;
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.SQLException;
+import java.sql.Statement;
+import java.sql.ResultSet;
 
 public class Database {
     private Connection connection;
@@ -38,5 +40,8 @@ public class Database {
     }
     public Connection getConnection() {
         return this.connection;
+    }
+    public ResultSet executeQuery(String query) throws SQLException {
+        return this.connection.createStatement().executeQuery(query);
     }
 }
