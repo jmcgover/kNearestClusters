@@ -3,6 +3,7 @@ package org.cplop.builders;
 import junit.framework.Test;
 import junit.framework.TestCase;
 import junit.framework.TestSuite;
+import org.junit.Ignore;
 
 import java.util.Collection;
 import java.util.Map;
@@ -10,6 +11,7 @@ import java.util.Map;
 /**
  * Unit test for the Data Builder
  */
+@Ignore("BuilderTest.java takes care of these tests")
 public class DataBuilderTest
     extends TestCase {
     /**
@@ -35,9 +37,9 @@ public class DataBuilderTest
         DataBuilder builder;
         builder = new DataBuilder();
 
-        Collection<Map<String, Object>> testDatapoints;
+        Collection<Datapoint> testDatapoints;
         testDatapoints = builder.getDatapoints();
-        builder.printData(System.out);
+        //builder.printData(System.out);
     }
 }
 
