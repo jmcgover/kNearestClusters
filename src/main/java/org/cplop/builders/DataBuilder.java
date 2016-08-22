@@ -26,13 +26,16 @@ public class DataBuilder {
     /**
      * Table Constants
      */
-    public static final String hostSpecies  = "commonName";
-    public static final String hostId       = "hostId";
-    public static final String isolateId    = "isoId";
-    public static final String pyroprintId  = "pyroId";
-    public static final String itsRegion    = "appliedRegion";
-    public static final String isErroneous  = "isErroneous";
-    public static final String peakHeight   = "pHeight";
+    protected static final String hostSpeciesColumn = "commonName";
+    protected static final String hostIdColumn      = "hostId";
+    protected static final String isolateIdColumn   = "isoId";
+    protected static final String pyroprintIdColumn = "pyroId";
+    protected static final String itsRegionColumn   = "appliedRegion";
+    protected static final String isErroneousColumn = "isErroneous";
+    protected static final String peakHeightColumn  = "pHeight";
+    protected static final String its1RegionValue   = "16-23";
+    protected static final String its2RegionValue   = "23-5";
+
 
     /**
      * Properties
@@ -40,7 +43,7 @@ public class DataBuilder {
     private String queryIsolates;
     private String queryPHeights;
     private String queryZScores;
-    private Collection<Map<String, Object>> datapoints;
+    protected Collection<Datapoint> datapoints;
     public DataBuilder() {
 
         /**
@@ -78,37 +81,43 @@ public class DataBuilder {
         /**
          * Loop through and save all the queried Isolates
          */
-        datapoints = Collections.synchronizedList(new LinkedList<Map<String, Object>>());
-        Hashtable<String, Object> datapoint;
+        datapoints = Collections.synchronizedList(new LinkedList<Datapoint>());
+        Datapoint datapoint;
         ResultSet resultsPHeights;
         LinkedList<Double> pHeights;
         try {
             while (results.next()) {
-                Integer pyroId = results.getInt(pyroprintId);
-                datapoint = new Hashtable<String, Object>();
-                datapoint.put(hostSpecies,  results.getString(hostSpecies));
-                datapoint.put(hostId,       results.getString(hostId));
-                datapoint.put(isolateId,    results.getString(isolateId));
-                datapoint.put(pyroprintId,  pyroId);
-                datapoint.put(itsRegion,    results.getString(itsRegion));
-                datapoint.put(isErroneous,  results.getInt(isErroneous) == 1);
+                /**
+                 * Get Pyroprint Data
+                 */
+                Integer pyroId = results.getInt(pyroprintIdColumn);
                 resultsPHeights = db.executeQuery(String.format(queryPHeights, pyroId));
                 pHeights = new LinkedList<Double>();
                 while (resultsPHeights.next()) {
-                    pHeights.add(resultsPHeights.getDouble(peakHeight));
+                    pHeights.add(resultsPHeights.getDouble(peakHeightColumn));
                 }
-                datapoint.put(peakHeight,   Collections.synchronizedList(new ArrayList<Double>(pHeights)));
+                /**
+                 * Get all other metadata and store.
+                 */
+                datapoint = new Datapoint(
+                    results.getString(hostSpeciesColumn),
+                    results.getString(hostIdColumn),
+                    results.getString(isolateIdColumn),
+                    pyroId,
+                    results.getString(itsRegionColumn),
+                    results.getInt(isErroneousColumn) == 1,
+                    Collections.synchronizedList(new ArrayList<Double>(pHeights)));
                 datapoints.add(datapoint);
             }
         } catch (SQLException e) {
             throw new RuntimeException(e);
         }
     }
-    public Collection<Map<String, Object>> getDatapoints() {
-        Collection<Map<String, Object>> datapointsCopy;
-        datapointsCopy = Collections.synchronizedList(new LinkedList<Map<String, Object>>());
-        for (Map<String, Object> m : this.datapoints) {
-            datapointsCopy.add(new Hashtable<String, Object>(m));
+    public Collection<Datapoint> getDatapoints() {
+        Collection<Datapoint> datapointsCopy;
+        datapointsCopy = Collections.synchronizedList(new LinkedList<Datapoint>());
+        for (Datapoint d : this.datapoints) {
+            datapointsCopy.add(new Datapoint(d));
         }
         return datapointsCopy;
     }
@@ -122,7 +131,7 @@ public class DataBuilder {
         return this.queryZScores;
     }
     public void printData(PrintStream out) {
-        for (Map<String, Object> datapoint : this.datapoints) {
+        for (Datapoint datapoint : this.datapoints) {
             System.out.printf("%s\n", datapoint.toString());
         }
     }
