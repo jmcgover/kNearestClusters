@@ -3,6 +3,7 @@ package org.cplop.builders;
 import junit.framework.Test;
 import junit.framework.TestCase;
 import junit.framework.TestSuite;
+import org.junit.Ignore;
 
 import java.util.Collection;
 import java.util.LinkedList;
@@ -13,6 +14,7 @@ import org.cplop.core.CPLOP;
 /**
  * Unit test for the  Builder
  */
+@Ignore("CPLOPTest.java will test these")
 public class BuilderTest
     extends TestCase {
 
