@@ -12,6 +12,9 @@ public class Isolate {
 
     private List<Double> representativeITS1Pyroprint;
     private List<Double> representativeITS2Pyroprint;
+    /**
+     * Constructor
+     */
     public Isolate(
             String isolateId,
             String hostId,
@@ -24,6 +27,9 @@ public class Isolate {
         this.pyroprintsITS1 = new Hashtable<Integer, List<Double>>(pyroprintsITS1);
         this.pyroprintsITS2 = new Hashtable<Integer, List<Double>>(pyroprintsITS2);
     }
+    /**
+     * Property Getters
+     */
     public String getIsolateId() {
         return this.isolateId;
     }
@@ -33,6 +39,16 @@ public class Isolate {
     public String getHostId() {
         return this.hostId;
     }
+    public Map<Integer, List<Double>> getITS1Pyroprints() {
+        return this.pyroprintsITS1;
+    }
+    public Map<Integer, List<Double>> getITS2Pyroprints() {
+        return this.pyroprintsITS2;
+    }
+
+    /**
+     * Object Method Overrides
+     */
     public boolean equals(Object o) {
         if (o == null) {
             return false;
