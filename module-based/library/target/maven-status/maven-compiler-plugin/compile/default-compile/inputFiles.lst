@@ -1,0 +1,11 @@
+/home/jmcgover/Dropbox/kNearestClusters/module-based/library/src/main/java/org/calpoly/cplop/library/core/BacterialClustering.java
+/home/jmcgover/Dropbox/kNearestClusters/module-based/library/src/main/java/org/calpoly/cplop/library/core/BacterialStrain.java
+/home/jmcgover/Dropbox/kNearestClusters/module-based/library/src/main/java/org/calpoly/cplop/library/core/CPLOP.java
+/home/jmcgover/Dropbox/kNearestClusters/module-based/library/src/main/java/org/calpoly/cplop/library/math/PearsonCorrelation.java
+/home/jmcgover/Dropbox/kNearestClusters/module-based/library/src/main/java/org/calpoly/cplop/library/builders/DataBuilder.java
+/home/jmcgover/Dropbox/kNearestClusters/module-based/library/src/main/java/org/calpoly/cplop/library/app/App.java
+/home/jmcgover/Dropbox/kNearestClusters/module-based/library/src/main/java/org/calpoly/cplop/library/builders/Filter.java
+/home/jmcgover/Dropbox/kNearestClusters/module-based/library/src/main/java/org/calpoly/cplop/library/core/Isolate.java
+/home/jmcgover/Dropbox/kNearestClusters/module-based/library/src/main/java/org/calpoly/cplop/library/db/Database.java
+/home/jmcgover/Dropbox/kNearestClusters/module-based/library/src/main/java/org/calpoly/cplop/library/builders/Datapoint.java
+/home/jmcgover/Dropbox/kNearestClusters/module-based/library/src/main/java/org/calpoly/cplop/library/builders/Builder.java
