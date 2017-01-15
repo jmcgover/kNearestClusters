@@ -9,11 +9,13 @@
   <artifactId>parent</artifactId>
   <packaging>pom</packaging>
   <version>1.0-SNAPSHOT</version>
-  <name>The k-Nearest Clusters Classification Algorithm and Tools for CPLOP</name>
+  <name>The k-Nearest Clusters Classification and Tools for CPLOP</name>
   <url>http://cplop.cosam.calpoly.edu/</url>
 
   <modules>
     <module>library</module>
+    <module>clustering</module>
+    <module>knearest</module>
   </modules>
 
   <dependencies>

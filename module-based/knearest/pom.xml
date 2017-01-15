@@ -12,18 +12,17 @@
     <version>1.0-SNAPSHOT</version>
   </parent>
 
-  <artifactId>library</artifactId>
+  <artifactId>knearest</artifactId>
   <packaging>jar</packaging>
   <name>CPLOP Library Data Structures</name>
   <url>http://cplop.cosam.calpoly.edu/</url>
 
   <dependencies>
-    <!-- MySQL Database Query -->
-    <!-- https://mvnrepository.com/artifact/mysql/mysql-connector-java -->
+    <!-- Clustering -->
     <dependency>
-      <groupId>mysql</groupId>
-      <artifactId>mysql-connector-java</artifactId>
-      <version>5.1.6</version>
+      <groupId>org.calpoly.cplop</groupId>
+      <artifactId>clustering</artifactId>
+      <version>${project.version}</version>
     </dependency>
   </dependencies>
 
