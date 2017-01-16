@@ -18,6 +18,12 @@
   <url>http://cplop.cosam.calpoly.edu/</url>
 
   <dependencies>
+    <!-- Clustering -->
+    <dependency>
+      <groupId>org.calpoly.cplop</groupId>
+      <artifactId>clustering</artifactId>
+      <version>${project.version}</version>
+    </dependency>
   </dependencies>
 
   <build>

@@ -14,7 +14,6 @@
 
   <modules>
     <module>library</module>
-    <module>clustering</module>
     <module>knearest</module>
   </modules>
 
