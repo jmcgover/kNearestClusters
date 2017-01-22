@@ -20,7 +20,8 @@ public interface KNearestClassifier<I, C> {
      * @param instance  Instance of type I to be classified
      * @param k         Integer size of the k-nearest list
      * @param alphas    List of Similarity values corresponding to each
-     *                  similarity metric of the instance for threshold filtering
+     *                  similarity metric of the instance for threshold
+     *                  filtering
      */
     public C classifyInstance(
             I instance,

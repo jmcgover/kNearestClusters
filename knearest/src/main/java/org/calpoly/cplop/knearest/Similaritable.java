@@ -8,4 +8,14 @@ package org.calpoly.cplop.knearest;
 
 public abstract class Similaritable implements Comparable<Similaritable> {
     abstract public int compareTo(Similaritable other);
+    abstract public Object getValue();
+    public boolean equals(Object other) {
+        if (other == null) {
+            return false;
+        }
+        if (this.getClass() != other.getClass()) {
+            return false;
+        }
+        return this.getValue().equals(((Similaritable)other).getValue());
+    }
 }

@@ -7,8 +7,8 @@ package org.calpoly.cplop.knearest;
  *
  * @param <I> Type of the instances to calculate the similarity of
  * @param <S> Similarity return value of the calculation
- *(which must have a total ordering)
+ *            (must have a total ordering)
  */
-public interface SimilarityMetric<I, S extends Similaritable> {
-    abstract public S similarity(I a, I b);
+public interface SimilarityMetric<I> {
+    public Similaritable similarity(I a, I b);
 }
