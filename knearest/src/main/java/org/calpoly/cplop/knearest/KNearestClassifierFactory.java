@@ -8,7 +8,7 @@ import java.util.List;
  * instances, all of type I
  */
 
-public interface KNearestClassifierFactory<I, C> {
+public interface KNearestClassifierFactory<I extends Classifiable<C>, C> {
     public KNearestClassifier<I, C> getClassifier(
             I instance,
             List<I> trainingInstances);

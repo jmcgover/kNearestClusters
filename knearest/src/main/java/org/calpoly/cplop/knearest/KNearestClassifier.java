@@ -11,7 +11,7 @@ import java.util.List;
  * @param <C> Class type to label the instance as, which must implement a
  *            proper .equals method for future use.
  */
-public interface KNearestClassifier<I, C> {
+public interface KNearestClassifier<I extends Classifiable<C>, C> {
     /**
      * Classifies a given instance of type I into a class of type C, provided
      * k value for the size of the list and an alpha value of type
@@ -26,10 +26,5 @@ public interface KNearestClassifier<I, C> {
     public C classifyInstance(
             I instance,
             Integer k,
-            List<Similaritable> alphas);
-    public List<List<I>> getKNearestLists(
-            Integer k);
-    public List<List<I>> filterLists(
-            List<List<I>> lists,
             List<Similaritable> alphas);
 }
