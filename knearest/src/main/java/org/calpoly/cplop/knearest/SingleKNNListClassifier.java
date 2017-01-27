@@ -14,28 +14,42 @@ public class SingleKNNListClassifier<I extends Classifiable<C>, C>
             RangeQuery<I> rangeQuery) {
         this.rangeQuery = rangeQuery;
     }
+    /**
+     */
     public C classifyInstance(
             I instance,
             Integer k,
             List<Similaritable> alphas) {
 
-        List<NeighborEntry<I>> kNearestNeighbors = this.rangeQuery.getKNearest(instance, k);
+        /**
+         * Get neighbors and filter
+         */
+        List<NeighborEntry<I>> kNearestNeighbors =
+            this.rangeQuery.getKNearest(instance, k);
         if (alphas != null) {
             this.filterNeighbors(kNearestNeighbors, alphas.get(0));
         }
 
-        Counter<C> counter = new Counter<C>();
+        /**
+         * Count Classes
+         */
+        List<C> neighborClasses = new ArrayList<C>();
         for (NeighborEntry<I> neighbor : kNearestNeighbors) {
-            counter.increment(neighbor.getInstance().getClassification());
+            neighborClasses.add(neighbor.getInstance().getClassification());
         }
-        C classification = null;
-
+        ClassificationCounter<C> counter = new ClassificationCounter<C>();
+        List<ClassificationEntry<C>> entries = 
+            counter.countClassifications(neighborClasses);
+        C classification = entries.get(0).getClassification();
         return classification;
     }
+    /**
+     */
     private List<NeighborEntry<I>> filterNeighbors(
             List<NeighborEntry<I>> neighbors,
             Similaritable alpha) {
-        List<NeighborEntry<I>> filteredNeighbors = new ArrayList<NeighborEntry<I>>();
+        List<NeighborEntry<I>> filteredNeighbors =
+            new ArrayList<NeighborEntry<I>>();
         for (NeighborEntry<I> neighbor : neighbors) {
             /**
              * Read as: if (sim(instance, neighbor) < alpha)
