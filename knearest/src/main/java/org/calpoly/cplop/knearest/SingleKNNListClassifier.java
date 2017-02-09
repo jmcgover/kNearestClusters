@@ -40,8 +40,11 @@ public class SingleKNNListClassifier<I extends Classifiable<C>, C>
         ClassificationCounter<C> counter = new ClassificationCounter<C>();
         List<ClassificationEntry<C>> entries = 
             counter.countClassifications(neighborClasses);
-        C classification = entries.get(0).getClassification();
-        return classification;
+        /**
+         * Merely decide that it is the most plural class with lowest average
+         * position breaking ties --- the default order.
+         */
+        return entries.get(0).getClassification();
     }
     /**
      */
