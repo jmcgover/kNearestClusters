@@ -19,9 +19,12 @@ public class SimilaritablePearsonTest
     public SimilaritablePearsonTest(String testName)
     {
         super(testName);
-        this.lower          = new SimilaritablePearson(-0.899);
-        this.lowerIdentical = new SimilaritablePearson(-0.899);
-        this.higher         = new SimilaritablePearson(0.999);
+        Similaritable closest = new SimilaritablePearson(0.999);
+        Similaritable closestCopy = new SimilaritablePearson(0.999);
+        Similaritable farthest = new SimilaritablePearson(-0.999);
+        this.lower          = closest;
+        this.lowerIdentical = closestCopy;
+        this.higher         = farthest;
     }
 
     /**

@@ -6,6 +6,7 @@ import junit.framework.TestSuite;
 
 import java.util.List;
 import java.util.ArrayList;
+import java.util.Arrays;
 
 /**
  * Unit test for simple SingleKNNListClassifier.
@@ -22,6 +23,9 @@ public class SingleKNNListClassifierTest
     {
         super( testName );
     }
+    /**
+     * Double Metric
+     */
     public class SimpleDoubleMetric implements SimilarityMetric<ClassifiableDouble> {
         public Similaritable similarity(
                 ClassifiableDouble a,
@@ -30,6 +34,20 @@ public class SingleKNNListClassifierTest
                     Math.abs(a.doubleValue() - b.doubleValue()));
         }
     }
+    /**
+     * Pearson Correlation Metric
+     */
+    public class SimplePearsonMetric implements 
+        SimilarityMetric<ClassifiableDoubleList> {
+        public Similaritable similarity(
+                ClassifiableDoubleList a,
+                ClassifiableDoubleList b) {
+            return new SimilaritablePearson(PearsonCorrelationTest.pearsonCorrelation(a.getList(), b.getList()));
+        }
+    }
+    /**
+     * Double with String Classification
+     */
     public class ClassifiableDouble
             implements Classifiable<String> {
         private Double value;
@@ -44,6 +62,24 @@ public class SingleKNNListClassifierTest
         }
         public int hashCode() {
             return this.value.hashCode();
+        }
+    }
+    /**
+     * Double List with String Classification
+     */
+    public class ClassifiableDoubleList
+            implements Classifiable<String> {
+        private List<Double> list;
+        private String name;
+        public ClassifiableDoubleList(List<Double> list, String name) {
+            this.list = list;
+            this.name = name;
+        }
+        public String getClassification() {
+            return this.name;
+        }
+        public List<Double> getList() {
+            return this.list;
         }
     }
     /**
@@ -91,7 +127,39 @@ public class SingleKNNListClassifierTest
             new SingleKNNListClassifier<ClassifiableDouble, String>(rangeQuery);
         String classification = 
             classifier.classifyInstance(center, 4, null);
-        System.out.println("FUUUCK " + classification);
         assertEquals(classification, "1.000");
+    }
+    public void testPearsonKNNClassifier() {
+        ClassifiableDoubleList unknown = new ClassifiableDoubleList(getDoubleArrayList(1.0, 2.0, 3.0), "correct");
+        ClassifiableDoubleList closest1 = new ClassifiableDoubleList(getDoubleArrayList(1.0, 2.0, 2.999), "correct");
+        ClassifiableDoubleList closest2 = new ClassifiableDoubleList(getDoubleArrayList(1.0, 1.999, 3.0), "correct");
+        ClassifiableDoubleList closest3 = new ClassifiableDoubleList(getDoubleArrayList(0.999, 2.0, 3.0), "correct");
+        ClassifiableDoubleList farther1 = new ClassifiableDoubleList(getDoubleArrayList(0.999, 2.0, -3.0), "wrong");
+        ClassifiableDoubleList farther2 = new ClassifiableDoubleList(getDoubleArrayList(0.999, -2.0, 3.0), "wrong");
+        ClassifiableDoubleList farther3 = new ClassifiableDoubleList(getDoubleArrayList(3.0, 2.0, 1.0), "very wrong");
+
+        List<ClassifiableDoubleList> otherStuff = new ArrayList<ClassifiableDoubleList>();
+        otherStuff.add(closest1);
+        otherStuff.add(closest2);
+        otherStuff.add(closest3);
+        otherStuff.add(farther1);
+        otherStuff.add(farther2);
+        otherStuff.add(farther3);
+
+        /** Build RangeQuery */
+        RangeQuery<ClassifiableDoubleList> rangeQuery = new
+            LinearCachedMetricQuery<ClassifiableDoubleList>(
+                    unknown,
+                    otherStuff,
+                    new SimplePearsonMetric());
+        /** Build Classifier */
+        KNearestClassifier<ClassifiableDoubleList, String> classifier =
+            new SingleKNNListClassifier<ClassifiableDoubleList, String>(rangeQuery);
+        String classification = 
+            classifier.classifyInstance(unknown, 4, null);
+        assertEquals(classification, "correct");
+    }
+    private ArrayList<Double> getDoubleArrayList(Double... values) {
+        return new ArrayList<Double>(Arrays.asList(values));
     }
 }

@@ -11,10 +11,18 @@ public class SimilaritablePearson extends Similaritable {
         }
         this.value = value;
     }
+    /**
+     * Comparing Pearson values is only useful as they relate to the number 1,
+     * due to the nature of this simlarity value. Given a target t and two
+     * Pearson Correlation values with respect to t, a and b, if 1 - a < 1 - b,
+     * then a is closer to t, in the same way that given two Euclidean Distance
+     * values with respect to t, the value closest to 0 is the closer vector.
+     */
     public int compareTo(Similaritable other) {
         if (other.getClass() == this.getClass()) {
-            return this.value.compareTo(
-                    ((SimilaritablePearson)other).value);
+            Double aDistance = 1.0 - this.value;
+            Double bDistance = 1.0 - ((SimilaritablePearson)other).value;
+            return aDistance.compareTo(bDistance);
         }
         throw new IllegalArgumentException(
                 String.format("%s cannot be cast to %s",

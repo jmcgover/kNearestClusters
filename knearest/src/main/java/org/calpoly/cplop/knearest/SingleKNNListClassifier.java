@@ -16,7 +16,7 @@ public class SingleKNNListClassifier<I extends Classifiable<C>, C>
     }
     /**
      */
-    public C classifyInstance(
+    public List<ClassificationEntry<C>> findNeighbors(
             I instance,
             Integer k,
             List<Similaritable> alphas) {
@@ -35,11 +35,23 @@ public class SingleKNNListClassifier<I extends Classifiable<C>, C>
          */
         List<C> neighborClasses = new ArrayList<C>();
         for (NeighborEntry<I> neighbor : kNearestNeighbors) {
+//            System.out.println(
+//                    String.format(
+//                        "%s:%s",
+//                        neighbor.getInstance().getClassification(),
+//                        neighbor.getSimilarity().getValue()));
             neighborClasses.add(neighbor.getInstance().getClassification());
         }
         ClassificationCounter<C> counter = new ClassificationCounter<C>();
-        List<ClassificationEntry<C>> entries = 
+        List<ClassificationEntry<C>> entries =
             counter.countClassifications(neighborClasses);
+        return entries;
+    }
+    public C classifyInstance(
+            I instance,
+            Integer k,
+            List<Similaritable> alphas) {
+        List<ClassificationEntry<C>> entries = this.findNeighbors(instance, k, alphas);
         /**
          * Merely decide that it is the most plural class with lowest average
          * position breaking ties --- the default order.
