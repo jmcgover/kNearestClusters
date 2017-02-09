@@ -13,8 +13,9 @@ public class ClassificationEntry<C>
     private List<Integer> positions;
 
     public ClassificationEntry(C classification, List<Integer> positions) {
-        this.count = positions.size();
+        this.classification = classification;
         this.positions = positions;
+        this.count = positions.size();
 
         Double totalPositions = 0.0;
         for (Integer position : positions) {
